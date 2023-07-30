@@ -1,4 +1,4 @@
-## Zed Shell
+## Sed Shell
 
 ## imports
 import os
@@ -23,16 +23,16 @@ class shell_z(cmd.Cmd):
     
     ## get the working directory
     def do_pwd(self, args):
-        '''pwd prints working directory'''
+        '''Prints working directory'''
         current_dir = os.getcwd()
         print(current_dir)
 
     def do_exit(self, args):
-        '''exit the shell'''
+        '''Exit the shell'''
         quit() ### exit the terminal
 
     def do_help(self, arg: str) -> bool | None:
-        '''helps find commands'''
+        '''Helps find commands'''
         return super().do_help(arg)
     
     ## change prompt
@@ -42,9 +42,24 @@ class shell_z(cmd.Cmd):
 
     ## clear the shell
     def do_cls(self, args):
-        '''clears shell'''
+        '''Clears shell'''
         os.system('cls')
 
+    ## see the contents
+    def do_cat(self, args):
+        '''Prints the contents of a file(s)'''
+        if not args:
+            print("Provide a file path")
+            return
+
+        try:
+            with open(args, 'r') as file:
+                contents = file.read()
+                print(contents)
+        except FileNotFoundError:
+            print("File not found.")
+        except OSError as e:
+            print(f"Error: {e}")
 
 
 if __name__ == "__main__":
